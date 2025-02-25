@@ -7,8 +7,8 @@
             margin: 0;
             background-color: black;
             color: white;
-            text-align: center;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
 
         /* Full-screen main image */
@@ -30,10 +30,13 @@
             width: 80%;
             max-width: 600px;
             margin: 20px auto;
+            overflow: hidden;
         }
 
         .slide {
             display: none;
+            width: 100%;
+            transition: opacity 1s ease;
         }
 
         .slide img {
@@ -49,7 +52,7 @@
             font-size: 30px;
             cursor: pointer;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             user-select: none;
         }
@@ -58,7 +61,7 @@
         .next { right: 10px; }
 
         .prev:hover, .next:hover {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7);
         }
     </style>
 </head>
@@ -74,44 +77,4 @@
         <div class="slide"><img src="image2.JPG"></div>
         <div class="slide"><img src="image3.JPG"></div>
         <div class="slide"><img src="image4.JPG"></div>
-        <div class="slide"><img src="image5.JPG"></div>
-        <div class="slide"><img src="image6.JPG"></div>
-        <div class="slide"><img src="image7.JPG"></div>
-        <div class="slide"><img src="image8.JPG"></div>
-        <div class="slide"><img src="image9.JPG"></div>
-        <div class="slide"><img src="image10.JPG"></div>
-        <div class="slide"><img src="image11.JPG"></div>
-
-        <!-- Navigation Arrows -->
-        <span class="prev" onclick="changeSlide(-1)">❮</span>
-        <span class="next" onclick="changeSlide(1)">❯</span>
-    </div>
-
-    <script>
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            let slides = document.getElementsByClassName("slide");
-            if (index >= slides.length) currentSlide = 0;
-            if (index < 0) currentSlide = slides.length - 1;
-            for (let slide of slides) {
-                slide.style.display = "none";
-            }
-            slides[currentSlide].style.display = "block";
-        }
-
-        function changeSlide(direction) {
-            currentSlide += direction;
-            showSlide(currentSlide);
-        }
-
-        function autoSlide() {
-            changeSlide(1);
-            setTimeout(autoSlide, 3000); // Change every 3 seconds
-        }
-
-        showSlide(currentSlide);
-        setTimeout(autoSlide, 3000);
-    </script>
-</body>
-</html>
+        <div class="slide"><img src="image5.JPG"></
