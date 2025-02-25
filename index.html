@@ -24,28 +24,41 @@
             max-height: 100%;
         }
 
-        /* Gallery section below */
-        .gallery-container {
-            padding: 20px;
+        /* Slideshow container */
+        .slideshow-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
         }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+        .slide {
+            display: none;
         }
 
-        .gallery img {
-            width: 150px;
-            height: auto;
+        .slide img {
+            width: 100%;
             border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.2s;
         }
 
-        .gallery img:hover {
-            transform: scale(1.1);
+        /* Navigation arrows */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            user-select: none;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .prev:hover, .next:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -55,22 +68,50 @@
         <img class="main-image" src="Untitled953_20250223121359.png" alt="Main Image">
     </div>
 
-    <!-- Gallery section below -->
-    <div class="gallery-container">
-        <h2>Gallery</h2>
-        <div class="gallery">
-            <img src="image1.jpg">
-            <img src="image2.jpg">
-            <img src="image3.jpg">
-            <img src="image4.jpg">
-            <img src="image5.jpg">
-            <img src="image6.jpg">
-            <img src="image7.jpg">
-            <img src="image8.jpg">
-            <img src="image9.jpg">
-            <img src="image10.jpg">
-            <img src="image11.jpg">
-        </div>
+    <!-- Slideshow section -->
+    <div class="slideshow-container">
+        <div class="slide"><img src="image1.JPG"></div>
+        <div class="slide"><img src="image2.JPG"></div>
+        <div class="slide"><img src="image3.JPG"></div>
+        <div class="slide"><img src="image4.JPG"></div>
+        <div class="slide"><img src="image5.JPG"></div>
+        <div class="slide"><img src="image6.JPG"></div>
+        <div class="slide"><img src="image7.JPG"></div>
+        <div class="slide"><img src="image8.JPG"></div>
+        <div class="slide"><img src="image9.JPG"></div>
+        <div class="slide"><img src="image10.JPG"></div>
+        <div class="slide"><img src="image11.JPG"></div>
+
+        <!-- Navigation Arrows -->
+        <span class="prev" onclick="changeSlide(-1)">❮</span>
+        <span class="next" onclick="changeSlide(1)">❯</span>
     </div>
+
+    <script>
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            let slides = document.getElementsByClassName("slide");
+            if (index >= slides.length) currentSlide = 0;
+            if (index < 0) currentSlide = slides.length - 1;
+            for (let slide of slides) {
+                slide.style.display = "none";
+            }
+            slides[currentSlide].style.display = "block";
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        function autoSlide() {
+            changeSlide(1);
+            setTimeout(autoSlide, 3000); // Change every 3 seconds
+        }
+
+        showSlide(currentSlide);
+        setTimeout(autoSlide, 3000);
+    </script>
 </body>
 </html>
