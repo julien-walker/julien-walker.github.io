@@ -2,8 +2,75 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Full-screen main image */
+        .main-image-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Gallery section below */
+        .gallery-container {
+            padding: 20px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: auto;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
-<body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <img src="Untitled953_20250223121359.png" style="max-width: 100%; height: auto;">
+<body>
+    <!-- Full-screen main image -->
+    <div class="main-image-container">
+        <img class="main-image" src="Untitled953_20250223121359.png" alt="Main Image">
+    </div>
+
+    <!-- Gallery section below -->
+    <div class="gallery-container">
+        <h2>Gallery</h2>
+        <div class="gallery">
+            <img src="image1.jpg">
+            <img src="image2.jpg">
+            <img src="image3.jpg">
+            <img src="image4.jpg">
+            <img src="image5.jpg">
+            <img src="image6.jpg">
+            <img src="image7.jpg">
+            <img src="image8.jpg">
+            <img src="image9.jpg">
+            <img src="image10.jpg">
+            <img src="image11.jpg">
+        </div>
+    </div>
 </body>
 </html>
