@@ -36,7 +36,7 @@
         .slide {
             display: none;
             width: 100%;
-            transition: opacity 1s ease;
+            transition: opacity 0.5s ease;
         }
 
         .slide img {
@@ -44,15 +44,17 @@
             border-radius: 5px;
         }
 
-        /* Dot navigation */
+        /* Dot navigation (smaller, on the image) */
         .dot-container {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
             text-align: center;
-            margin-top: 10px;
         }
 
         .dot {
-            height: 15px;
-            width: 15px;
+            height: 12px;
+            width: 12px;
             margin: 0 5px;
             background-color: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
@@ -64,6 +66,38 @@
         .active {
             background-color: #fff;
         }
+
+        /* Arrows for desktop */
+        .arrow-left,
+        .arrow-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1;
+            display: none;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        @media screen and (min-width: 768px) {
+            .arrow-left,
+            .arrow-right {
+                display: block;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -73,7 +107,7 @@
     </div>
 
     <!-- Slideshow section -->
-    <div class="slideshow-container">
+    <div class="slideshow-container" id="slideshow-container">
         <div class="slide"><img src="image1.JPG"></div>
         <div class="slide"><img src="image2.JPG"></div>
         <div class="slide"><img src="image3.JPG"></div>
@@ -85,21 +119,25 @@
         <div class="slide"><img src="image9.JPG"></div>
         <div class="slide"><img src="image10.JPG"></div>
         <div class="slide"><img src="image11.JPG"></div>
-    </div>
 
-    <!-- Dot navigation -->
-    <div class="dot-container">
-        <span class="dot" onclick="currentSlide(0)"></span>
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
-        <span class="dot" onclick="currentSlide(5)"></span>
-        <span class="dot" onclick="currentSlide(6)"></span>
-        <span class="dot" onclick="currentSlide(7)"></span>
-        <span class="dot" onclick="currentSlide(8)"></span>
-        <span class="dot" onclick="currentSlide(9)"></span>
-        <span class="dot" onclick="currentSlide(10)"></span>
+        <!-- Dot navigation -->
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+            <span class="dot" onclick="currentSlide(8)"></span>
+            <span class="dot" onclick="currentSlide(9)"></span>
+            <span class="dot" onclick="currentSlide(10)"></span>
+        </div>
+
+        <!-- Arrows for desktop -->
+        <span class="arrow-left" onclick="changeSlide(-1)">&#10094;</span>
+        <span class="arrow-right" onclick="changeSlide(1)">&#10095;</span>
     </div>
 
     <script>
@@ -107,6 +145,7 @@
         let slides = document.getElementsByClassName("slide");
         let dots = document.getElementsByClassName("dot");
 
+        // Function to show the current slide
         function showSlide(index) {
             // Hide all slides
             for (let slide of slides) {
@@ -126,19 +165,49 @@
             dots[currentSlideIndex].classList.add("active");
         }
 
+        // Function to change slide by clicking dot
         function currentSlide(index) {
             currentSlideIndex = index;
             showSlide(currentSlideIndex);
         }
 
-        function autoSlide() {
-            currentSlideIndex++;
+        // Function to change slide using arrows
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
             showSlide(currentSlideIndex);
-            setTimeout(autoSlide, 3000); // Change every 3 seconds
         }
 
+        // Swipe detection logic for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+
+        function handleTouchEnd(event) {
+            touchEndX = event.changedTouches[0].clientX;
+            handleSwipe();
+        }
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 50) {
+                // Swiped left
+                currentSlideIndex++;
+            } else if (touchEndX - touchStartX > 50) {
+                // Swiped right
+                currentSlideIndex--;
+            }
+            showSlide(currentSlideIndex);
+        }
+
+        // Initialize the first slide
         showSlide(currentSlideIndex);
-        setTimeout(autoSlide, 3000);
+
+        // Event listeners for swipe on touch devices
+        const slideshowContainer = document.getElementById('slideshow-container');
+        slideshowContainer.addEventListener('touchstart', handleTouchStart);
+        slideshowContainer.addEventListener('touchend', handleTouchEnd);
     </script>
 </body>
 </html>
