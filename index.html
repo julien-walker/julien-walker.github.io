@@ -44,24 +44,25 @@
             border-radius: 5px;
         }
 
-        /* Navigation arrows */
-        .prev, .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 30px;
-            cursor: pointer;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            user-select: none;
+        /* Dot navigation */
+        .dot-container {
+            text-align: center;
+            margin-top: 10px;
         }
 
-        .prev { left: 10px; }
-        .next { right: 10px; }
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
 
-        .prev:hover, .next:hover {
-            background: rgba(255, 255, 255, 0.7);
+        .active {
+            background-color: #fff;
         }
     </style>
 </head>
@@ -77,4 +78,67 @@
         <div class="slide"><img src="image2.JPG"></div>
         <div class="slide"><img src="image3.JPG"></div>
         <div class="slide"><img src="image4.JPG"></div>
-        <div class="slide"><img src="image5.JPG"></
+        <div class="slide"><img src="image5.JPG"></div>
+        <div class="slide"><img src="image6.JPG"></div>
+        <div class="slide"><img src="image7.JPG"></div>
+        <div class="slide"><img src="image8.JPG"></div>
+        <div class="slide"><img src="image9.JPG"></div>
+        <div class="slide"><img src="image10.JPG"></div>
+        <div class="slide"><img src="image11.JPG"></div>
+    </div>
+
+    <!-- Dot navigation -->
+    <div class="dot-container">
+        <span class="dot" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+        <span class="dot" onclick="currentSlide(8)"></span>
+        <span class="dot" onclick="currentSlide(9)"></span>
+        <span class="dot" onclick="currentSlide(10)"></span>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        let slides = document.getElementsByClassName("slide");
+        let dots = document.getElementsByClassName("dot");
+
+        function showSlide(index) {
+            // Hide all slides
+            for (let slide of slides) {
+                slide.style.display = "none";
+            }
+
+            // Reset dot styles
+            for (let dot of dots) {
+                dot.classList.remove("active");
+            }
+
+            // Show the current slide and activate corresponding dot
+            if (index >= slides.length) currentSlideIndex = 0;
+            if (index < 0) currentSlideIndex = slides.length - 1;
+
+            slides[currentSlideIndex].style.display = "block";
+            dots[currentSlideIndex].classList.add("active");
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+
+        function autoSlide() {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+            setTimeout(autoSlide, 3000); // Change every 3 seconds
+        }
+
+        showSlide(currentSlideIndex);
+        setTimeout(autoSlide, 3000);
+    </script>
+</body>
+</html>
