@@ -36,7 +36,6 @@
         .slide {
             display: none;
             width: 100%;
-            transition: opacity 0.5s ease;
         }
 
         .slide img {
@@ -44,27 +43,26 @@
             border-radius: 5px;
         }
 
-        /* Dot navigation (smaller, on the image) */
+        /* Dot navigation */
         .dot-container {
             position: absolute;
-            bottom: 10px;
+            bottom: 15px;
             width: 100%;
             text-align: center;
         }
 
         .dot {
-            height: 12px;
-            width: 12px;
+            height: 8px;
+            width: 8px;
             margin: 0 5px;
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             display: inline-block;
-            transition: background-color 0.3s;
             cursor: pointer;
         }
 
         .active {
-            background-color: #fff;
+            background-color: white;
         }
 
         /* Arrows for desktop */
@@ -73,7 +71,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 30px;
+            font-size: 24px;
             color: white;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
@@ -97,7 +95,6 @@
                 display: block;
             }
         }
-
     </style>
 </head>
 <body>
@@ -145,39 +142,33 @@
         let slides = document.getElementsByClassName("slide");
         let dots = document.getElementsByClassName("dot");
 
-        // Function to show the current slide
+        // Show the first slide
         function showSlide(index) {
-            // Hide all slides
-            for (let slide of slides) {
-                slide.style.display = "none";
-            }
-
-            // Reset dot styles
-            for (let dot of dots) {
-                dot.classList.remove("active");
-            }
-
-            // Show the current slide and activate corresponding dot
             if (index >= slides.length) currentSlideIndex = 0;
             if (index < 0) currentSlideIndex = slides.length - 1;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                dots[i].classList.remove("active");
+            }
 
             slides[currentSlideIndex].style.display = "block";
             dots[currentSlideIndex].classList.add("active");
         }
 
-        // Function to change slide by clicking dot
+        // Change slide with dots
         function currentSlide(index) {
             currentSlideIndex = index;
             showSlide(currentSlideIndex);
         }
 
-        // Function to change slide using arrows
+        // Change slide with arrows
         function changeSlide(direction) {
             currentSlideIndex += direction;
             showSlide(currentSlideIndex);
         }
 
-        // Swipe detection logic for mobile
+        // Swipe detection for mobile
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -192,19 +183,17 @@
 
         function handleSwipe() {
             if (touchStartX - touchEndX > 50) {
-                // Swiped left
                 currentSlideIndex++;
             } else if (touchEndX - touchStartX > 50) {
-                // Swiped right
                 currentSlideIndex--;
             }
             showSlide(currentSlideIndex);
         }
 
-        // Initialize the first slide
+        // Initialize first slide
         showSlide(currentSlideIndex);
 
-        // Event listeners for swipe on touch devices
+        // Event listeners for swipe gestures
         const slideshowContainer = document.getElementById('slideshow-container');
         slideshowContainer.addEventListener('touchstart', handleTouchStart);
         slideshowContainer.addEventListener('touchend', handleTouchEnd);
